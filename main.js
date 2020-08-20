@@ -23,4 +23,4 @@ function getRow(firstRow, secondRow) {
 
 console.log(getRow(firstRow, secondRow)); // мама мыла раму
 
-alert('Больше всего букв а в строке : \'' + getRow(firstRow, secondRow) + '\'')
+alert('Больше всего букв а в строке : \'' + getRow(firstRow, secondRow) + '\'');
