@@ -1,53 +1,72 @@
-/*first*/
-const firstRow = 'мама мыла раму';
-const secondRow = 'собака друг человека';
-const CHAR = 'а';
-alert(`Даны две строки: \'${firstRow}\' и \'${secondRow}\'. Сейчас скажу в которой больше букв ${CHAR}.`);
+const $btn = document.getElementById('btn-kick');
+const $btnIronKick = document.getElementById('btn-ironkick');
+const $btnsArray = [$btn, $btnIronKick];
 
 
-function countSymbol(row, char) {
-    let counter = 0;
-    for (let i = 0; i < row.length; i++) {
-        if(row.charAt(i) === char) {
-            counter++
-        }
-    }
-    return counter;
+const character = {
+    name: 'Pickachu',
+    defaultHP: 100,
+    damageHP: 100,
+    elHp: document.getElementById('health-character'),
+    elProgressBar: document.getElementById('progressbar-character'),
 }
 
-function getRow(firstRow, secondRow, char) {
-    let firstCounter = countSymbol(firstRow, char);
-    let secondCounter = countSymbol(secondRow, char);
-    if (firstCounter === secondCounter) {
-        return 'Здесь одинаковое количество букв ' + char;
-    }
-    return (firstCounter > secondCounter) ? firstRow : secondRow;
+const enemy = {
+    name: 'Charmander',
+    defaultHP: 100,
+    damageHP: 100,
+    elHp: document.getElementById('health-enemy'),
+    elProgressBar: document.getElementById('progressbar-enemy'),
 }
 
-console.log(getRow(firstRow, secondRow, CHAR)); // мама мыла раму
+const $personArray = [character, enemy];
 
-alert('Больше всего букв ' + CHAR + ' в строке : \'' + getRow(firstRow, secondRow, CHAR) + '\'');
-
-/*second*/
-
-function formattedPhone(phone) {
-    let formattedNumber = '';
-    for (let i = 0; i < phone.length; i++) {
-        formattedNumber += phone[i];
-        if (phone.charAt(i-1) === '+' && phone.charAt(i) === '7') {
-            formattedNumber += ' ('
-        }
-        if (phone.charAt(i) === '3') {
-            formattedNumber += ') '
-        }
-        if (phone.charAt(i) === '6') {
-            formattedNumber += '-'
-        }
-        if (phone.charAt(i) === '8') {
-            formattedNumber += '-'
-        }
-    }
-    return formattedNumber;
+function attackAll(damageHp,hero, person) {
+    changeHP(random(damageHp), hero);
+    changeHP(random(damageHp), person);
 }
 
-console.log(formattedPhone('+71234567890')); // +7 (123) 456-78-90
+function catchClick(btn, num) {
+    btn.addEventListener('click', () => {
+        console.log('Kick');
+        attackAll(num, character, enemy);
+    }) 
+}
+
+function init() {
+    console.log('Start Game!');
+    renderHP(character);
+    renderHP(enemy);
+    catchClick($btn, 20);
+    catchClick($btnIronKick, 50);
+}
+
+function renderHP(person) {
+    renderHPLife(person);
+    renderProgressBarHP(person);
+}
+function renderHPLife(person) {
+    person.elHp.innerText = person.damageHP + ' / ' + person.defaultHP;
+}
+
+function renderProgressBarHP(person) {
+    person.elProgressBar.style.width = person.damageHP + '%';
+}
+
+function changeHP(count, person) {
+    if (person.damageHP < count) {
+        person.damageHP = 0;
+        alert('Бедный ' + person.name + ' проиграл бой!');
+        for (let i = 0; i < $btnsArray.length; i++) {
+            $btnsArray[i].disabled = true;
+        }
+    } else {
+        person.damageHP -= count;
+    }
+    renderHP(person);
+}
+
+function random(num) {
+    return Math.ceil(Math.random()*num);
+}
+init();
