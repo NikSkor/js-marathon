@@ -38,9 +38,33 @@ function attackAll(damageHp) {
     enemy.changeHP(random(damageHp));
 }
 
+function countClick() {
+    let count = 0;
+
+    return function(btn) {
+        count += 1;
+        console.log(`Атака ${btn.textContent.slice(0, -4)}, ударов: ${count}`);
+        let textButton = btn.textContent.slice(0, -3);
+        btn.textContent = `${textButton}[${6-count}]`;
+        if (count >= 6) {
+            btn.disabled = true;
+            console.log(`Атака ${btn.textContent.slice(0, -3)}больше не возможна`);
+        }
+    }
+}
+
+const countTail = countClick();
+const countJolt = countClick();
+
 function catchClick(btn, num) {
     btn.addEventListener('click', () => {
-        console.log('Kick');
+        // console.log('Kick');
+        if (btn.id === 'btn-kick') {
+            countJolt(btn);
+        }
+        if (btn.id === 'btn-ironkick') {
+            countTail(btn);
+        }
         attackAll(num);
     }) 
 }
@@ -49,8 +73,8 @@ function init() {
     console.log('Start Game!');
     character.renderHP();
     enemy.renderHP();
-    catchClick($btn, 20);
-    catchClick($btnIronKick, 50);
+    catchClick($btn, 10);
+    catchClick($btnIronKick, 20);
 }
 
 function renderHP() {
@@ -65,7 +89,7 @@ function renderHPLife(){
 
 function renderProgressBarHP() {
     this.elProgressBar.style.width = Math.ceil((this.damageHP / this.defaultHP) * 100) + '%';
-    console.log(this.elProgressBar.style.width);
+    // console.log(this.elProgressBar.style.width);
 }
 
 function changeHP(count) {
@@ -81,8 +105,8 @@ function changeHP(count) {
         this.damageHP -= count;
         const log = this === enemy ? generateLog(this, character, count) : generateLog(this, enemy, count);
         $logFight.push(log);
-        console.log(log);
-        console.log($logFight);
+        // console.log(log);
+        // console.log($logFight);
 
     }
     renderLog();
