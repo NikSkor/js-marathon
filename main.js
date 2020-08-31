@@ -38,7 +38,7 @@ function attackAll(damageHp) {
     enemy.changeHP(random(damageHp));
 }
 
-function countClick(btn) {
+function countClick() {
     let count = 0;
 
     return function(btn) {
