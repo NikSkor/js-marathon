@@ -1,53 +1,53 @@
 import Pokemon from './pokemon.js';
-import random from './utils.js';
+import {random, randomPokemon, getElById, getElByClass} from './utils.js';
 import countClick from './counter.js';
+import {pokemons} from './pokemons.js';
+import {eraseLog} from "./log.js";
+import {initPlayer, attacksBtns} from './init.js';
 
-function getElById(id) {
-    return document.getElementById(id);
-}
-const $btn = getElById('btn-kick');
-const $btnIronKick = getElById('btn-ironkick');
-const $btnsArray = [$btn, $btnIronKick];
-const $logs = document.querySelector('#logs');
+
+
+const $control = getElByClass('.control');
+const $startBtn = getElById('start');
+const $resetBtn = getElById('reset');
+const $extBtn = getElById('ext');
+
+const $playGround = getElByClass('.playground');
+
+const $logs = getElByClass('#logs');
 let $logFight = [];
 
-const character = new Pokemon({
-        name: 'Pickachu',
-        defaultHP: 350,
-        damageHP: 350,
-        selectors: 'character',
+let player1 = {};
+let player2 = {};
+
+$startBtn.addEventListener('click', ()=>{
+    $playGround.style.display = 'flex';
+    $startBtn.disabled = true;
+    $resetBtn.disabled = false;
+    eraseLog($logs);
+    player1 = initPlayer('player1', pokemons);
+    player2 = initPlayer('player2', pokemons);
+    attacksBtns(player1, player2, $control, $logs, $logFight);
+    $extBtn.disabled = false;
+
+})
+$resetBtn.addEventListener('click', () => {
+    player1 = initPlayer('player1', pokemons);
+    player2 = initPlayer('player2', pokemons);
+    eraseLog($logs);
+    eraseLog($control);
+    attacksBtns(player1, player2, $control, $logs, $logFight);
 })
 
-const enemy = new Pokemon({
-        name: 'Charmander',
-        defaultHP: 330,
-        damageHP: 330,
-        selectors: 'enemy',
+$extBtn.addEventListener('click', () => {
+    $playGround.style.display = 'none';
+    $startBtn.disabled = false;
+    $resetBtn.disabled = true;
+    $extBtn.disabled = true;
+    eraseLog($logs);
+    eraseLog($control);
+    const h2 = document.createElement('H2');
+    h2.innerText = 'Спасибо за игру!!!';
+    $logs.appendChild(h2);
+
 })
-
-const countTail = countClick($btn, 6);
-const countJolt = countClick($btnIronKick, 8);
-
-function catchClick(btn) {
-    btn.addEventListener('click', () => {
-        // console.log('Kick');
-        if (btn.id === 'btn-kick') {
-            countTail();
-        }
-        if (btn.id === 'btn-ironkick') {
-            countJolt();
-        }
-        character.changeHP(random(30, 10), $logs, $logFight, $btnsArray, enemy);
-        enemy.changeHP(random(40, 20), $logs, $logFight, $btnsArray, character);
-    }) 
-}
-
-function init() {
-    console.log('Start Game!');
-    character.renderHP();
-    enemy.renderHP();
-    catchClick($btn, 10);
-    catchClick($btnIronKick, 20);
-}
-
-init();

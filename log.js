@@ -1,4 +1,4 @@
-import random from './utils.js';
+import {random} from './utils.js';
 
 export function generateLog(firstPerson, secondPerson, count) {
     const logs = [
@@ -27,5 +27,11 @@ export function renderLog(logs, logFight) {
 
         p.innerText = logFight[i];
         logs.insertBefore(p, logs.children[0]); //вставка в обратном порядке
+    }
+}
+
+export function eraseLog(logs){
+    while (logs.firstChild) {
+        logs.removeChild(logs.firstChild); // очищаем лог
     }
 }
