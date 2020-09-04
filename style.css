@@ -35,19 +35,20 @@ body {
 }
 
 .control {
-    width: 320px;
+    width: 360px;
     height: 260px;
     position: relative;
     margin: 20px;
     display: flex;
     flex-direction: column;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap;
 }
 
 .playground {
     max-width: 1024px;
-    display: flex;
+    display: none;
     justify-content: space-around;
     margin: 30px auto;
 }
@@ -513,4 +514,12 @@ h1 {
 .logs {
     display: block;
     max-width: 1024px;
+}
+
+.control-panel {
+    max-width: 460px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 30px auto;
 }

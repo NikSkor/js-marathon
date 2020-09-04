@@ -7,7 +7,7 @@ function countClick(btn, count) {
         btn.innerText = `${text} [${count}]`;
         if (count <= 0) {
             btn.disabled = true;
-            console.log(`Атака ${text}больше не возможна`);
+            console.log(`Атака ${text}, больше не возможна`);
         }
     }
 }
