@@ -512,8 +512,17 @@ h1 {
 }
 
 .logs {
-    display: block;
+    display: none;
     max-width: 1024px;
+    height: 150px;
+    width: 65%;
+    padding: 20px 20px;
+    text-align: left;
+    overflow-y: scroll;
+    background-color: #fff;
+    opacity: 0.6;
+    border-radius: 20px;
+    margin: auto;
 }
 
 .control-panel {

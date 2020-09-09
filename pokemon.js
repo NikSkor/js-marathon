@@ -17,6 +17,7 @@ class Selectors {
 
 class Pokemon extends Selectors {
     constructor({
+        id,
         img,
         name,
         type,
@@ -25,6 +26,7 @@ class Pokemon extends Selectors {
         attacks,
     }) {
         super(selectors);
+        this.id = id;
         this.img = img;
         this.name = name;
         this.type = type;
@@ -69,6 +71,7 @@ class Pokemon extends Selectors {
             const log = this === enemy ? generateLog(enemy, this, count) : generateLog(this, enemy, count);
             logFight.push(log);
         }
+        logs.style.display = 'inline-block';
         renderLog(logs, logFight);
         this.renderPlayer();
     }
