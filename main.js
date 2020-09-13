@@ -1,19 +1,13 @@
 import Pokemon from './pokemon.js';
-import {random, randomPokemon, getElById, getElByClass} from './utils.js';
+import {getPokemons, getElById, getElByClass} from './utils.js';
 import countClick from './counter.js';
 // import {pokemons} from './pokemons.js';
 import {eraseLog, closeLog} from "./log.js";
 import {initPlayer, attacksBtns} from './init.js';
 
 class Game {
-    getPokemons = async() => {
-        const base = await fetch('https://reactmarathon-api.netlify.app/api/pokemons');
-        const body = await base.json();
-        return body;
-    }
-
     start = async() => {
-        const pokemons = await this.getPokemons();
+        const pokemons = await getPokemons('https://reactmarathon-api.netlify.app/api/pokemons');
         console.log(pokemons);
         const $control = getElByClass('.control');
         const $startBtn = getElById('start');
