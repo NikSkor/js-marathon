@@ -35,3 +35,7 @@ export function eraseLog(logs){
         logs.removeChild(logs.firstChild); // очищаем лог
     }
 }
+
+export function closeLog(logs) {
+    logs.style.display = 'none';
+}

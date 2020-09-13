@@ -15,3 +15,9 @@ export function getElById(id) {
 export function getElByClass(className) {
     return document.querySelector(className);
 }
+
+export async function getPokemons(url) {
+    const base = await fetch(url);
+    const body = await base.json();
+    return body;
+}
